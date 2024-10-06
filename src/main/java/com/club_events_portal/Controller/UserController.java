@@ -47,10 +47,12 @@ public class UserController {
         // Validate user credentials
         Optional<User> validatedUser = userService.validateUser(user.getEmailId(), user.getPassword());
         if (validatedUser.isPresent()) {
-            // Successful login logic (e.g., generate token)
-            return ResponseEntity.ok("Login successful");
+            // Successful login logic (generate token)
+            String token = userService.generateToken(validatedUser.get());
+            return ResponseEntity.ok(token); // Return the token in the response
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
     }
+
 }
